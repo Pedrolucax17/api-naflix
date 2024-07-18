@@ -12,7 +12,7 @@ public record DataSerie(
         @JsonAlias("imdbRating")
         String rating,
         @JsonAlias("Genre")
-        String Category,
+        String category,
         @JsonAlias("Actors")
         String actors,
         @JsonAlias("Plot")
