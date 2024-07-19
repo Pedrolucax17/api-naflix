@@ -1,5 +1,6 @@
 package com.naflix.streams.model;
 
+import com.naflix.streams.service.ConsumeMyMemory;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ public class Serie {
         this.rating = serie.rating();
         this.category = Category.fromString(serie.category().split(",")[0].trim());
         this.actors = serie.actors();
-        this.plot = serie.plot();
+        this.plot = ConsumeMyMemory.getTranslate(serie.plot()).trim();
         this.poster = serie.poster();
     }
 
