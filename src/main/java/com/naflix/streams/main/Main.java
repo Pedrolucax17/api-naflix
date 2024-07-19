@@ -62,35 +62,6 @@ public class Main {
                     System.out.println("Escolha uma opção válida");
             }
 
-//            List<DataSeason> seasons = new ArrayList<>();
-//
-//            System.out.println("***TEMPORADAS***");
-//            for(int i = 1; i <= searchSerie.totalSeasons(); i++){
-//                String newJson = ConsumeApi.consumeApi(BASE_URL + serie + "&season=" + i + API_KEY);
-//                DataSeason season = convertData.getDatas(newJson, DataSeason.class);
-//                seasons.add(season);
-//                System.out.println(season);
-//            }
-//
-//            System.out.println("***EPISODIOS***");
-////        seasons.forEach(t -> t.episodes().forEach(e -> System.out.println(e.title())));
-//
-//            List<DataEpisode> episodes = seasons.stream()
-//                    .flatMap(t -> t.episodes().stream()).collect(Collectors.toList());
-//
-//
-//            System.out.println("***TOP 5***");
-//            episodes.stream()
-//                    .filter(e -> !e.imdbRating().equalsIgnoreCase("N/A"))
-//                    .sorted(Comparator.comparing(DataEpisode::imdbRating).reversed())
-//                    .limit(5)
-//                    .forEach(System.out::println);
-//
-//            System.out.println("MINHA CLASSE EPISODE");
-//            List<Episode> episodeList = seasons.stream()
-//                    .flatMap(t -> t.episodes().stream().map(d -> new Episode(t.numberSeason(), d))).collect(Collectors.toList());
-//
-//            episodeList.forEach(System.out::println);
         }
 
     }

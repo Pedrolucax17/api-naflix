@@ -18,10 +18,12 @@ public class Episode {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "number_season")
     private Integer numberSeason;
     private String title;
     private LocalDate released;
     private String episode;
+    @Column(name = "imdb_rating")
     private Double imdbRating;
 
     public Episode(Integer numberSeason, DataEpisode dataEpisode){
