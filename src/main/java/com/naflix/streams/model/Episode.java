@@ -1,7 +1,6 @@
 package com.naflix.streams.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.DateTimeException;
@@ -16,12 +15,17 @@ import java.time.format.DateTimeParseException;
 @Entity
 @Table(name = "tbl_episode")
 public class Episode {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private Integer numberSeason;
     private String title;
     private LocalDate released;
     private String episode;
     private Double imdbRating;
 
-    public Episode(DataEpisode dataEpisode){
+    public Episode(Integer numberSeason, DataEpisode dataEpisode){
+        this.numberSeason = numberSeason;
         this.title = dataEpisode.title();
         try{
             this.released = LocalDate.parse(dataEpisode.released());
@@ -35,5 +39,17 @@ public class Episode {
             imdbRating = 0.0;
         }
 
+    }
+
+    @Override
+    public String toString() {
+        return "Episode{" +
+                "id=" + id +
+                ", numberSeason=" + numberSeason +
+                ", title='" + title + '\'' +
+                ", released=" + released +
+                ", episode='" + episode + '\'' +
+                ", imdbRating=" + imdbRating +
+                '}';
     }
 }
