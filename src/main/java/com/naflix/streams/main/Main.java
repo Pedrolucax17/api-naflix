@@ -28,6 +28,7 @@ public class Main {
             String menu = """
                 1 - Buscar séries
                 2 - Buscar episódios
+                3- Listar todas as séries
                 
                 0 - Sair                                 
                 """;
@@ -45,19 +46,15 @@ public class Main {
                     searchSeries();
                     break;
                 case 2:
+                    searchEpisodeBySerie();
+                    break;
+                case 3:
                     listAllSeries();
                     break;
                 default:
                     System.out.println("Escolha uma opção válida");
             }
 
-//            System.out.println("Digite a série que você deseja: ");
-//            String serie = sc.nextLine();
-//            String json = ConsumeApi.consumeApi(BASE_URL + serie + API_KEY);
-//            DataSerie searchSerie = convertData.getDatas(json, DataSerie.class);
-//            System.out.println(json);
-//            System.out.println(searchSerie);
-//
 //            List<DataSeason> seasons = new ArrayList<>();
 //
 //            System.out.println("***TEMPORADAS***");
@@ -94,7 +91,7 @@ public class Main {
     private DataSerie getDataSeries(){
         System.out.println("Digite a série que você deseja: ");
         String serie = sc.nextLine();
-        String json = ConsumeApi.consumeApi(BASE_URL + serie + API_KEY);
+        String json = ConsumeApi.consumeApi(BASE_URL + serie.replace(" ", "+") + API_KEY);
         return convertData.getDatas(json, DataSerie.class);
     }
 
@@ -102,6 +99,19 @@ public class Main {
         DataSerie dataSerie = getDataSeries();
         serieList.add(dataSerie);
         System.out.println(dataSerie);
+    }
+
+    private void searchEpisodeBySerie(){
+        DataSerie dataSerie = getDataSeries();
+        List<DataSeason> seasons = new ArrayList<>();
+
+        for(int i = 1; i <= dataSerie.totalSeasons(); i++){
+                String json = ConsumeApi.consumeApi(BASE_URL + dataSerie.title() + "&season=" + i + API_KEY);
+                DataSeason season = convertData.getDatas(json, DataSeason.class);
+                seasons.add(season);
+        }
+
+        seasons.forEach(System.out::println);
     }
 
     private void listAllSeries(){

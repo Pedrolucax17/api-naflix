@@ -1,6 +1,9 @@
 package com.naflix.streams.model;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 import lombok.*;
 
 @NoArgsConstructor
@@ -23,6 +26,7 @@ public class Serie {
 
     private String rating;
 
+    @Enumerated(EnumType.STRING)
     private Category category;
 
     private String actors;
@@ -30,6 +34,9 @@ public class Serie {
     private String plot;
 
     private String poster;
+
+    @Transient
+    private List<Episode> episodes = new ArrayList<>();
 
     public Serie(DataSerie serie) {
         this.title = serie.title();
