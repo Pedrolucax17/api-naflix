@@ -23,7 +23,7 @@ public class Serie {
 
     private String rating;
 
-    private String category;
+    private Category category;
 
     private String actors;
 
@@ -35,7 +35,7 @@ public class Serie {
         this.title = serie.title();
         this.totalSeason = serie.totalSeasons();
         this.rating = serie.rating();
-        this.category = serie.category();
+        this.category = Category.fromString(serie.category().split(",")[0].trim());
         this.actors = serie.actors();
         this.plot = serie.plot();
         this.poster = serie.poster();
