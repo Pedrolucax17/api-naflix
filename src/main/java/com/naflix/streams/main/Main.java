@@ -75,6 +75,8 @@ public class Main {
 
     private void searchSeries(){
         DataSerie dataSerie = getDataSeries();
+        Serie serie = new Serie(dataSerie);
+        serieRepository.save(serie);
         serieList.add(dataSerie);
         System.out.println(dataSerie);
     }
