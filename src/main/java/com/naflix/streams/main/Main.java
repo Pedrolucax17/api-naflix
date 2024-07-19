@@ -1,6 +1,7 @@
 package com.naflix.streams.main;
 
 import com.naflix.streams.model.*;
+import com.naflix.streams.repository.SerieRepository;
 import com.naflix.streams.service.ConsumeApi;
 import com.naflix.streams.service.ConvertData;
 
@@ -19,6 +20,12 @@ public class Main {
     private final String BASE_URL = "https://www.omdbapi.com/?t=";
     private final String API_KEY = "&apikey=1e8a0a02";
     private List<DataSerie> serieList = new ArrayList<>();
+
+    private SerieRepository serieRepository;
+
+    public Main(SerieRepository serieRepository) {
+        this.serieRepository = serieRepository;
+    }
 
     public void showMenu(){
 
