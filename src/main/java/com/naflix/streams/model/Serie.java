@@ -36,7 +36,7 @@ public class Serie {
 
     private String poster;
 
-    @Transient
+    @OneToMany(mappedBy = "serie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Episode> episodes = new ArrayList<>();
 
     public Serie(DataSerie serie) {
@@ -47,6 +47,11 @@ public class Serie {
         this.actors = serie.actors();
         this.plot = ConsumeMyMemory.getTranslate(serie.plot()).trim();
         this.poster = serie.poster();
+    }
+
+    public void setEpisodios(List<Episode> episodes){
+        episodes.forEach(e -> e.setSerie(this));
+        this.episodes = episodes;
     }
 
     @Override

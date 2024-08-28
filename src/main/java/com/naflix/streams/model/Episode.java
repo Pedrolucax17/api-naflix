@@ -26,6 +26,9 @@ public class Episode {
     @Column(name = "imdb_rating")
     private Double imdbRating;
 
+    @ManyToOne
+    private Serie serie;
+
     public Episode(Integer numberSeason, DataEpisode dataEpisode){
         this.numberSeason = numberSeason;
         this.title = dataEpisode.title();
