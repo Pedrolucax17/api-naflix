@@ -95,8 +95,7 @@ public class Main {
     }
 
     private void listAllSeries(){
-        List<Serie> series;
-        series = serieList.stream().map(d -> new Serie(d)).collect(Collectors.toList());
+        List<Serie> series = serieRepository.findAll();
         series.stream().sorted(Comparator.comparing(Serie::getCategory)).forEach(System.out::println);
     }
 
