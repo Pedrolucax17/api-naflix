@@ -100,7 +100,7 @@ public class Main {
             List<DataSeason> seasons = new ArrayList<>();
 
             for (int i = 1; i <= serieEncontrada.getTotalSeason(); i++){
-                String json = ConsumeApi.consumeApi(BASE_URL + serieEncontrada.getTitle() + "&season=" + i + API_KEY);
+                String json = ConsumeApi.consumeApi(BASE_URL + serieEncontrada.getTitle().replace(" ", "+") + "&season=" + i + API_KEY);
                 DataSeason season = convertData.getDatas(json, DataSeason.class);
                 seasons.add(season);
             }
