@@ -5,11 +5,8 @@ import com.naflix.streams.repository.SerieRepository;
 import com.naflix.streams.service.ConsumeApi;
 import com.naflix.streams.service.ConvertData;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
-import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -19,7 +16,7 @@ public class Main {
     private Scanner sc = new Scanner(System.in);
     private final String BASE_URL = "https://www.omdbapi.com/?t=";
     private final String API_KEY = "&apikey=1e8a0a02";
-    private List<DataSerie> serieList = new ArrayList<>();
+    private List<Serie> serieList = new ArrayList<>();
 
     private SerieRepository serieRepository;
 
@@ -77,21 +74,49 @@ public class Main {
         DataSerie dataSerie = getDataSeries();
         Serie serie = new Serie(dataSerie);
         serieRepository.save(serie);
-        serieList.add(dataSerie);
+        serieList.add(serie);
         System.out.println(dataSerie);
     }
 
     private void searchEpisodeBySerie(){
-        DataSerie dataSerie = getDataSeries();
-        List<DataSeason> seasons = new ArrayList<>();
+        listAllSeries();
 
-        for(int i = 1; i <= dataSerie.totalSeasons(); i++){
-                String json = ConsumeApi.consumeApi(BASE_URL + dataSerie.title() + "&season=" + i + API_KEY);
-                DataSeason season = convertData.getDatas(json, DataSeason.class);
-                seasons.add(season);
+        if (serieList.isEmpty()){
+            System.out.println("A lista está vazia");
+        }else{
+            System.out.println("A lista não está vazia");
         }
 
-        seasons.forEach(System.out::println);
+        System.out.println("Escolha uma série pelo nome: ");
+        var nomeSerie = sc.nextLine();
+        System.out.println(nomeSerie);
+
+        System.out.println(serieList);
+
+        Optional<Serie> serieOptional = serieList.stream().filter(s -> s.getTitle().toLowerCase().contains(nomeSerie.toLowerCase())).findFirst();
+        System.out.println(serieOptional);
+        if (serieOptional.isPresent()){
+            Serie serieEncontrada = serieOptional.get();
+            List<DataSeason> seasons = new ArrayList<>();
+
+            for (int i = 1; i <= serieEncontrada.getTotalSeason(); i++){
+                String json = ConsumeApi.consumeApi(BASE_URL + serieEncontrada.getTitle() + "&season=" + i + API_KEY);
+                DataSeason season = convertData.getDatas(json, DataSeason.class);
+                seasons.add(season);
+            }
+
+            seasons.forEach(System.out::println);
+
+            List<Episode> episodes = seasons.stream().flatMap(s -> s.episodes().stream().map(
+                    e -> new Episode(s.numberSeason(), e)
+            )).collect(Collectors.toList());
+
+            serieEncontrada.setEpisodes(episodes);
+            serieRepository.save(serieEncontrada);
+
+        }else{
+            System.out.println("Série não encontrada!");
+        }
     }
 
     private void listAllSeries(){

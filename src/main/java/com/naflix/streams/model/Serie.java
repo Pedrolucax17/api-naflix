@@ -49,7 +49,7 @@ public class Serie {
         this.poster = serie.poster();
     }
 
-    public void setEpisodios(List<Episode> episodes){
+    public void setEpisodes(List<Episode> episodes){
         episodes.forEach(e -> e.setSerie(this));
         this.episodes = episodes;
     }
