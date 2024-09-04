@@ -55,6 +55,9 @@ public class Main {
                 case 3:
                     listAllSeries();
                     break;
+                case 4:
+                    findSerie();
+                    break;
                 default:
                     System.out.println("Escolha uma opção válida");
             }
@@ -116,6 +119,20 @@ public class Main {
 
         }else{
             System.out.println("Série não encontrada!");
+        }
+    }
+
+    private void findSerie(){
+        listAllSeries();
+        System.out.println("Digite o id da série que você deseja: ");
+        Long id = sc.nextLong();
+        Optional<Serie> serieOptional = serieRepository.findById(id);
+        if (serieOptional.isPresent()){
+            Serie foundSerie = serieOptional.get();
+            System.out.println(foundSerie);
+            serieList.add(foundSerie);
+        }else{
+            System.out.println("Série não encontrada");
         }
     }
 
